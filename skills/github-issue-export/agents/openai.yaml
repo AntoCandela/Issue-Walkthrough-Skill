@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Issue Export"
+  short_description: "Export walkthroughs to Markdown and annotated PNGs"
+  default_prompt: "Use $github-issue-export to turn this HTML walkthrough into a local GitHub Markdown draft with rendered annotated screenshots."

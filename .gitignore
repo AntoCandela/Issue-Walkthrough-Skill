@@ -4,3 +4,6 @@ usability-reports/
 !.env.example
 .DS_Store
 Thumbs.db
+
+.cache/
+__pycache__/
