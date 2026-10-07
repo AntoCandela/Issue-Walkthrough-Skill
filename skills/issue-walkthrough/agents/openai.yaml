@@ -1,0 +1,6 @@
+interface:
+  display_name: "Issue Walkthrough"
+  short_description: "Visual issue steps, evidence, causes, and fixes"
+  default_prompt: "Use $issue-walkthrough to make a local HTML guide for this issue with screenshots, steps, causes, and proposed fixes."
+policy:
+  allow_implicit_invocation: true
