@@ -1,36 +1,29 @@
 ---
 name: screenshot-annotations
-description: Annotate real screenshots with SVG boxes, arrows and numbered callouts in a local HTML file. Use for visual explanations, tutorials, reviews or issue evidence, with or without a full walkthrough. Does not generate replacement UI screenshots or edit screenshot pixels.
+description: Add SVG boxes, arrows and numbered callouts over real screenshots in a local HTML file. Use for tutorials, reviews or visual issue explanations. Does not generate UI screenshots or repaint image pixels.
 ---
 
 # Screenshot annotations
 
-Create an annotated screenshot using [assets/annotated-screenshot.html](assets/annotated-screenshot.html). Use this skill independently for a visual explanation, or embed its figure and scoped styles into an existing report. It does not require the issue-walkthrough skill.
+Use [assets/annotated-screenshot.html](assets/annotated-screenshot.html) for a standalone explanation, or embed its figure and scoped styles into a report.
 
-Replace every template token with observed image dimensions, element coordinates and escaped text. The template is a starting point, not evidence. For a standalone output, save the adapted HTML and screenshot together in the requested directory, or `<workspace>/usability-reports/<topic>-annotations/`. Choose a new directory if one already exists.
+Copy both [assets/annotated-screenshot.html](assets/annotated-screenshot.html) and [assets/annotated-screenshot.css](assets/annotated-screenshot.css) into the output folder. Keep the relative stylesheet link intact, including when renaming the HTML to `index.html`. Edit structure in HTML and presentation in CSS.
+When embedding a figure into another report, copy only the `.annotated-*` rules into that report's stylesheet; do not import the standalone body and main styles.
 
-## Capture and save
+## Annotate the screenshot
 
-Use the browser or screenshot tool available in the current environment. Save the returned image bytes directly as PNG or JPEG using the matching extension. Do not recreate the application as an image and call it a screenshot. If capture is unavailable, label the step Not verified and explain what evidence is missing.
+1. Use a supplied screenshot or capture one with an available tool. Save the original image bytes with the matching PNG or JPEG extension. Do not invent missing UI or evidence. If capture is blocked, explain what is missing.
+2. Keep the original unchanged. Read the saved image's dimensions with an image decoder; do not infer its format from the filename. The dimensions may differ from the browser viewport.
+3. Replace the template tokens with measured coordinates and escaped text. Set the SVG `viewBox` to the image dimensions. Read [references/coordinates.md](references/coordinates.md) when positioning callouts, especially for scaled or cropped images.
+4. Mark the relevant controls with visible SVG boxes, arrows and numbers. In a report, show the annotated screenshot in the main step, never only inside collapsed details. Keep explanations in captions outside the image. Match numbers to surrounding steps, and do not cover the control or error.
+5. Give each SVG marker a unique ID. Add image alt text and explain each callout in the caption. Use labels as well as color; hide decorative SVG from screen readers.
 
-Keep the captured original unchanged. Use ordered filenames such as `01-start.png`, `02-result.png`. Store them beside the HTML, with relative image links. Record the actual saved image dimensions, which may differ from the browser viewport dimensions.
+Keep evidence local unless publication is requested. Exclude credentials and unrelated personal content. For requested raster edits, use an available image-editing tool, retain the original and label the edited result as an explanatory rendering.
 
-## Place callouts
+## Save and check
 
-Use the template's `.annotated-shot` wrapper and SVG overlay. For a saved image of width W and height H, set `viewBox="0 0 W H"`. Position boxes, arrows and numbered markers in that image's coordinate system. Let the image determine wrapper height; scale the SVG with the image, without fixed display heights or object-fit cropping.
+Write UTF-8 HTML. Keep images beside it with relative links and a direct link to each original. Use the requested folder, or `<workspace>/usability-reports/<topic>-annotations/`. Choose a new folder if one already exists.
 
-If an element was measured in a displayed image of width D, convert its displayed coordinates to saved-image pixels using scale W/D. Apply the same scale to its x, y, width and height. When using viewport DOM bounds, first account for screenshot origin, scrolling and device pixel ratio; do not assume CSS pixels equal image pixels.
+Open the result at wide and narrow widths. Check image loading, box alignment, arrow tips, readable numbers and original-image links. Check punctuation for broken characters. If preview is unavailable, report that visual checking is incomplete.
 
-Prefer the full original image. If a crop helps, retain and link the original separately, label the crop, and subtract the crop origin from each annotation coordinate before applying any resize scale. Use the cropped image dimensions for its viewBox.
-
-Give SVG markers unique IDs per figure, such as `arrow-step-2-shot-1`, and reference that exact ID in `marker-end`. Duplicate IDs across a page can attach arrows to the wrong marker.
-
-Keep explanations in captions outside the screenshot. Match numbers between the instructions, markers and captions. Do not cover the relevant control or error. Keep the SVG aria-hidden when the caption supplies the equivalent explanation, and give the image useful alt text.
-
-## Check the result
-
-Open the completed HTML at a wide and narrow width. Check that images load, boxes stay aligned, arrow tips hit their targets, numbers remain readable, and original-image links work. Keep UTF-8 encoding through every file read and write; inspect arrows and punctuation for broken characters. Do not claim visual verification if no browser preview was available.
-
-Match callout numbers with surrounding instructions when embedding into a walkthrough. Use labels as well as color. Keep evidence local unless publishing is requested; avoid capturing unrelated personal content or credentials. If raster editing is requested, use the available image-editing tools, label the result as an explanatory rendering, and retain the original.
-
-Invoke as `$screenshot-annotations`, or select it when an annotated screenshot would help explain a task.
+Return a link to the HTML file. This skill does not require a full issue walkthrough.
