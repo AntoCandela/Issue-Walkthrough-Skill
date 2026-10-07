@@ -11,12 +11,19 @@
 
 {{PRECONDITIONS_AND_EXACT_ACTION}}
 
-![{{ANNOTATION_DESCRIPTION}}](images/01-step.png)
+![{{ANNOTATION_DESCRIPTION}}]({{EXPORTED_STEP_IMAGE}})
 
 {{NUMBERED_CALLOUT_EXPLANATION}}
 
 - **Expected:** {{EXPECTED_BEHAVIOR}}
 - **Actual:** {{OBSERVED_BEHAVIOR}}
+
+<!-- Include when a comparison is available; otherwise omit this section. -->
+## Annotated comparison
+
+{{COMPARISON_EXPLANATION}}
+
+![{{COMPARISON_DESCRIPTION}}]({{EXPORTED_COMPARISON_IMAGE}})
 
 ## Cause and proposed fix
 

@@ -38,4 +38,6 @@ Open the guide at wide and narrow widths. Check images, links, navigation and re
 
 Capture the relevant states from the running application when access is available. Inspect each capture and add visible SVG boxes, arrows and numbered callouts over the unchanged image. Put this annotated image directly in the step, not inside collapsed details. Link the original separately. Existing screenshots may be used when requested; label historical evidence clearly.
 
+When a comparison helps explain a difference between views, include an annotated comparison after the relevant steps as well as the individual step screenshots. Preserve existing comparisons when updating a report.
+
 Use `$screenshot-annotations` when installed for placement guidance. The walkthrough template also includes an SVG layer so this skill can work alone. Match its viewBox to image dimensions verified by an image decoder, not guessed from the filename, use measured coordinates and unique marker IDs, and match numbers to steps and captions. Never fabricate an annotation target. If access prevents capture or accurate placement, label that step incomplete and explain the missing evidence.
