@@ -1,24 +1,88 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{TITLE}}</title>
-<style>
-:root{font:16px/1.55 system-ui,sans-serif;color:#17253a;background:#edf2f7}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1180px;margin:auto;padding:32px}header{padding-top:48px}h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:12px 0}h2{font-size:25px;margin:0 0 12px}h3{font-size:18px;margin:0 0 8px}p{margin:8px 0 16px}a{color:#175ac8;overflow-wrap:anywhere}a:focus-visible,summary:focus-visible{outline:3px solid #175ac8;outline-offset:4px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}nav a{background:white;border:1px solid #c8d3e0;border-radius:24px;padding:8px 16px;text-decoration:none;font-size:14px}.eyebrow{color:#52637b;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}section{background:#fff;border:1px solid #d5dfeb;border-radius:18px;padding:28px;margin:0 0 28px;scroll-margin-top:20px}.step{display:inline-grid;place-items:center;background:#17253a;color:white;border-radius:50%;width:34px;height:34px;margin-right:10px;font-size:18px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}.expected,.actual{padding:16px;border-radius:10px}.expected{background:#eaf6f0;border-left:4px solid #208657}.actual{background:#fff0ef;border-left:4px solid #d54c43}.label{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}figure{margin:20px 0}img{display:block;width:100%;height:auto;border:1px solid #ccd5df;border-radius:8px}figcaption,.note{font-size:14px;color:#52637b;margin:8px 0}details{border-top:1px solid #dce3eb;margin-top:20px;padding-top:16px}summary{cursor:pointer;font-weight:650}ol{padding-left:24px}li{padding-left:5px;margin:8px 0}.badge{display:inline-block;color:#ac2c29;background:#fff0ef;padding:3px 9px;border-radius:6px;font-size:13px;font-weight:700}.explanation{border-top:1px solid #dce3eb;padding-top:20px;margin-top:20px}footer{color:#52637b;padding-top:0}@media(max-width:700px){header,main,footer{padding:20px}section{padding:20px}.comparison{grid-template-columns:1fr}}@media print{body{background:white}nav{display:none}section{break-before:page;border:0;padding:0}header,main{padding:0}.comparison{break-inside:avoid}a{color:inherit}}
-</style>
-</head><body>
-<header><div class="eyebrow">{{CONTEXT_AND_DATE}}</div><h1>{{TITLE}}</h1><p>{{PURPOSE_AND_STARTING_POINT}}</p><p class="note">{{EVIDENCE_SCOPE}}</p><nav aria-label="Walkthrough sections"><a href="#step-1">1 · {{SHORT_ACTION}}</a><a href="#next">Next action</a></nav></header>
-<main>
-<section id="step-1">
-<h2><span class="step">1</span>{{ACTION_TITLE}}</h2><span class="badge">{{VERIFICATION_STATUS}}</span>
-<ol><li>{{EXACT_NAVIGATION}}</li><li>{{ACTION_WITH_VISIBLE_LABEL}}</li><li>{{WHAT_TO_INSPECT}}</li></ol>
-<div class="comparison"><div class="expected"><div class="label">Expected</div>{{EXPECTED}}</div><div class="actual"><div class="label">Actual</div>{{OBSERVED}}</div></div>
-<figure><div class="shot"><img src="{{SCREENSHOT_FILE}}" alt="{{SCREENSHOT_DESCRIPTION}}">
-<!-- Optional: embed a figure from screenshot-annotations when that skill is available. -->
-</div><figcaption>{{CAPTION_AND_CALLOUT_EXPLANATION}}</figcaption></figure>
-<details><summary>Unedited screenshot</summary><a href="{{SCREENSHOT_FILE}}">Open original at full resolution</a></details>
-<div class="explanation"><h3>Cause</h3><p>{{CAUSE_AND_CONFIDENCE}}</p><p>{{SOURCE_LINKS}}</p><h3>Possible solution</h3><p>{{PROPOSED_CHANGE_AND_SCOPE}}</p><h3>Verify the result</h3><p>{{SUCCESS_CHECK}}</p></div>
+<link rel="stylesheet" href="walkthrough.css">
+</head>
+<body>
+<main class="page">
+<header>
+  <p class="meta">{{CONTEXT_AND_DATE}}</p>
+  <h1>{{TITLE}}</h1>
+  <p class="intro">{{PROBLEM_AND_IMPACT}}</p>
+  <p class="status"><strong>{{VERIFICATION_STATUS}}</strong> · {{EVIDENCE_SCOPE}}</p>
+  <!-- Omit navigation for a short, one-step guide. -->
+
+</header>
+<nav aria-label="Guide contents"><a href="#steps">Follow the steps</a><a href="#result">What should change</a><a href="#technical">Technical details</a></nav>
+<section id="steps" aria-labelledby="steps-title">
+  <h2 id="steps-title">Follow the steps</h2>
+  <p>{{ISSUE_EXPLANATION}}</p>
+  <ol class="steps">
+    <!-- Duplicate this li for each meaningful action, keeping its evidence beside it. -->
+    <li class="step">
+      <h3>1. {{ACTION_TITLE}}</h3>
+      <p>{{ACTION_WITH_VISIBLE_LABEL}}</p>
+      <p class="check"><strong>Look for:</strong> {{SUCCESS_CHECK}}</p>
+      <figure>
+        <!-- Fill measured SVG coordinates for each screenshot; never invent target locations. -->
+        <div class="annotated-shot"><img src="{{SCREENSHOT_FILE}}" alt="{{SCREENSHOT_DESCRIPTION}}">
+<svg viewBox="0 0 {{IMAGE_WIDTH}} {{IMAGE_HEIGHT}}" aria-hidden="true">
+<defs><marker id="arrow-{{FIGURE_ID}}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#175ac8"/></marker></defs>
+<rect x="{{BOX_X}}" y="{{BOX_Y}}" width="{{BOX_WIDTH}}" height="{{BOX_HEIGHT}}" fill="none" stroke="#175ac8" stroke-width="3"/>
+<path d="M{{ARROW_START_X}} {{ARROW_START_Y}} L{{ARROW_END_X}} {{ARROW_END_Y}}" fill="none" stroke="#175ac8" stroke-width="3" marker-end="url(#arrow-{{FIGURE_ID}})"/>
+<circle cx="{{MARKER_X}}" cy="{{MARKER_Y}}" r="18" fill="#175ac8"/>
+<text x="{{MARKER_X}}" y="{{MARKER_Y}}" dy=".35em" fill="white" font-size="18" text-anchor="middle">1</text>
+</svg>
+        </div>
+        <figcaption><span>{{OBSERVED_AND_CALLOUT_EXPLANATION}}</span><a href="{{SCREENSHOT_FILE}}">Open original screenshot</a></figcaption>
+      </figure>
+    </li>
+  </ol>
 </section>
-<section id="next"><h2>Next action</h2><p>{{NEXT_ACTION}}</p><p class="note">{{UNRESOLVED_OR_UNVERIFIED}}</p></section>
-</main><footer>{{RELATED_LINKS_AND_SCOPE}}</footer>
-</body></html>
+<section id="result" aria-labelledby="result-title">
+  <!-- Use "Working result" only after verifying the fix. -->
+  <h2 id="result-title">What should change</h2>
+  <div class="outcome">
+    <p>{{PROPOSED_CHANGE_OR_VERIFIED_RESULT}}</p>
+    <p><strong>Next:</strong> {{NEXT_ACTION_AND_VERIFICATION}}</p>
+    <p class="check">{{UNRESOLVED_OR_UNVERIFIED}}</p>
+  </div>
+</section>
+<details id="technical">
+  <summary>Technical details</summary>
+  <div class="technical">
+    <div><h3>Cause</h3><p>{{CAUSE_AND_CONFIDENCE}}</p></div>
+    <div><h3>Evidence and version</h3><p>{{SOURCE_LINKS_AND_REVISION}}</p></div>
+  </div>
+</details>
+<footer>{{RELATED_LINKS_AND_SCOPE}}</footer>
+</main>
+<script>
+// Mark the section currently being read; native anchor navigation still works without JS.
+const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+const destinations = navLinks.map(link => document.getElementById(link.hash.slice(1)));
+function updateNavigation() {
+  let selected = 0;
+  destinations.forEach((section, index) => {
+    if (section && section.getBoundingClientRect().top <= 88) selected = index;
+  });
+  navLinks.forEach((link, index) => {
+    if (index === selected) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+let scheduled = false;
+window.addEventListener('scroll', () => {
+  if (scheduled) return;
+  scheduled = true;
+  requestAnimationFrame(() => { updateNavigation(); scheduled = false; });
+}, { passive: true });
+window.addEventListener('hashchange', updateNavigation);
+window.addEventListener('load', updateNavigation);
+updateNavigation();
+</script>
+</body>
+</html>

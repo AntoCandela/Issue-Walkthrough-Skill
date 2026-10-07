@@ -1,35 +1,41 @@
 ---
 name: issue-walkthrough
-description: Create a local visual HTML walkthrough for reproducing, understanding, troubleshooting, or managing an issue. Use when step-by-step guidance with screenshots, expected versus actual behavior, causes, and proposed fixes would help the user follow the work. Also use when the user asks for the previous issue walkthrough style. Skip simple answers that do not benefit from an artifact.
+description: Create a local HTML guide that explains how to reproduce an issue, what went wrong, and how to verify a fix. Use when steps and screenshots help someone follow the work. Skip simple questions that need only a short answer.
 ---
 
 # Issue walkthrough
 
-Create an easy-to-follow local HTML guide using [assets/walkthrough.html](assets/walkthrough.html). The default template uses pale background, navy headings, rounded white sections, numbered steps, navigation pills, green expected/evidence panels, and red observed-problem panels.
+Use [assets/walkthrough.html](assets/walkthrough.html) to turn an issue into a guide someone can follow.
 
-## Workflow
+Copy both [assets/walkthrough.html](assets/walkthrough.html) and [assets/walkthrough.css](assets/walkthrough.css) into the output folder. Keep the relative stylesheet link intact, including when renaming the HTML to `index.html`. Edit structure in HTML and presentation in CSS.
 
-1. Identify the issue, intended outcome, starting screen, and what the user must do. Reuse the current application and task context. A walkthrough request does not authorize fixing code or changing account/data settings.
-2. Reproduce the relevant interactions when access permits. Capture only meaningful states: where to start/click, visible evidence, and the resulting problem. If a step cannot be performed, label it **Not verified** or **Proposed**; do not present expected behavior as an observation.
-3. Save in the user's requested directory. Otherwise use `<workspace>/usability-reports/<issue-slug>-visual/`, choosing a new name if a guide already exists. Write HTML as UTF-8 and retain its `<meta charset="utf-8">`. Keep `index.html` and its screenshot assets together with relative links so it opens offline with `file://`. No hosted deployment or external upload is needed.
-4. Copy and adapt the bundled HTML. Replace all template tokens; duplicate sections only when needed. Each section should contain:
-   - A specific action title and status: Reproduced, Verified, Proposed, or Not verified.
-   - Short ordered steps using the interface's exact visible labels, plus the checkpoint that tells the user whether the step worked.
-   - Expected and actual behavior for a defect; action and verification for a proposed remedy.
-   - A relevant screenshot and a short caption, with numbered callouts when useful and available. Keep originals available through expandable details and direct links.
-   - **Cause:** observed evidence and the explanation it supports. Explicitly label a hypothesis or unverified inference. Link to the exact source file, API diagnosis, log excerpt, or issue comment where useful; distinguish the inspected source revision from the running version.
-   - **Possible solution:** a concrete next change, its scope/owner, and how to verify it. Do not claim it is implemented. Include a stop/rollback condition only when the action warrants one.
-5. End with the next action and unresolved questions. Link related issue/diagnosis documents. Cover only verified cases, and state any important coverage gaps.
-6. Open the HTML for the user and check it visually. Verify images load, navigation anchors work, callouts point to the right elements, links resolve, and steps remain readable at narrow widths. Return a short local file link. A ZIP is optional when portability would help.
+## Build the guide
 
-## Screenshot evidence
+1. Identify the starting screen, the intended result and the actions to test. Creating a guide does not authorize code fixes or account changes.
+2. Try the steps. Capture real screenshots of the starting point, relevant actions and result. Keep originals unchanged. Exclude credentials and unrelated personal content.
+3. Start with the problem, its impact and the verification status. Use **Reproduced**, **Verified**, **Proposed** or **Not verified**. Never present an untested step as a result.
+4. Put each action directly above its screenshot. Use the interface's exact labels, a short "Look for" checkpoint and a caption explaining what happened. Link the original image. For backend or CLI issues, use real requests or terminal output where more useful.
+5. Finish with what should change, the next action and how to check success. Use "Working result" only after verifying a fix. State any checks still missing.
+6. Put causes, code links, logs and version details in the expandable **Technical details** section. Label hypotheses and distinguish inspected code from the running version. Keep essential steps and results outside this section.
 
-Preserve real screenshots and link to the originals. Do not fabricate UI evidence or capture unrelated personal content. Keep evidence local unless publication is requested.
+Before each issue's steps, add a short plain-language paragraph explaining what is wrong, what the user expects and why the difference matters. Keep it separate from the verification status and technical cause. For multiple issues, repeat this sequence with unique section IDs. Omit navigation and unused blocks for a short guide.
 
-For SVG boxes, arrows and numbered callouts, use `$screenshot-annotations` when installed. Embed its figure and scoped annotation styles into the report, matching callout numbers to the steps and captions. If that skill is unavailable, use the report's plain screenshot and caption; no companion files are required to create a walkthrough. Do not claim annotations were added when they were not.
+Explain what to do and look for before technical details. Use short sentences and consistent terms. Do not reuse another project's names, paths or evidence.
 
-## Keep the guide practical
+## Design
 
-Use concise plain language. Explain what to click and what to look for before implementation details. Do not carry project names, issue numbers, fixture names, machine paths, screenshots, or diagnoses from a previous guide into a new one. Prefer useful sections over a fixed number of steps. For a one-screen task, a single annotated section is enough.
+Keep the template's plain document layout. Use one neutral font, the shared 8px spacing scale and large screenshots. Let headings and text use the full content width; do not impose character-width limits. Keep 8px between related lines, 16px before screenshots, 24px before step lists and 32px between sections. Put navigation outside the header so it stays sticky across the report. Use a subtle active underline, a horizontally scrollable row on narrow screens, and anchor offsets that clear the navbar. Separate content with space and occasional horizontal rules. Avoid coloured left borders, decorative cards, gradients, badge pills and oversized headings. Use colour for useful annotations and links. Do not add a framework, web fonts or remote assets.
 
-This skill may be selected automatically when a visual issue walkthrough is useful, or invoked as `$issue-walkthrough`.
+## Save and check
+
+Replace all template tokens. Write UTF-8 HTML and keep its charset declaration. Store `index.html` and screenshots together with relative links so the guide opens offline.
+
+Use the requested folder, or `<workspace>/usability-reports/<issue-slug>-visual/`. Choose a new folder if one already exists. Keep the guide local unless publication is requested.
+
+Open the guide at wide and narrow widths. Check images, links, navigation and readability. If preview is unavailable, say that visual checking is incomplete. Return a link to the local HTML file.
+
+## Screenshot annotations
+
+Capture the relevant states from the running application when access is available. Inspect each capture and add visible SVG boxes, arrows and numbered callouts over the unchanged image. Put this annotated image directly in the step, not inside collapsed details. Link the original separately. Existing screenshots may be used when requested; label historical evidence clearly.
+
+Use `$screenshot-annotations` when installed for placement guidance. The walkthrough template also includes an SVG layer so this skill can work alone. Match its viewBox to image dimensions verified by an image decoder, not guessed from the filename, use measured coordinates and unique marker IDs, and match numbers to steps and captions. Never fabricate an annotation target. If access prevents capture or accurate placement, label that step incomplete and explain the missing evidence.
