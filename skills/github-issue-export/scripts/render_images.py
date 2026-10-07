@@ -37,6 +37,8 @@ def main():
             page = context.new_page()
             page.goto(source.as_uri(), wait_until="load")
             page.evaluate("document.fonts.ready")
+            # Report navigation must not cover figures while capture scrolls them into view.
+            page.add_style_tag(content="nav { visibility: hidden !important; }")
             targets = page.locator(args.selector)
             if targets.count() == 0:
                 raise ValueError("No matching figures. Check --selector; nothing was exported.")
