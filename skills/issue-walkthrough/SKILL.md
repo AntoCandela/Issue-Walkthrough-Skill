@@ -16,21 +16,17 @@ Create an easy-to-follow local HTML guide using [assets/walkthrough.html](assets
    - A specific action title and status: Reproduced, Verified, Proposed, or Not verified.
    - Short ordered steps using the interface's exact visible labels, plus the checkpoint that tells the user whether the step worked.
    - Expected and actual behavior for a defect; action and verification for a proposed remedy.
-   - A relevant screenshot, numbered callouts, and a short caption. Keep originals available through expandable details and direct links.
+   - A relevant screenshot and a short caption, with numbered callouts when useful and available. Keep originals available through expandable details and direct links.
    - **Cause:** observed evidence and the explanation it supports. Explicitly label a hypothesis or unverified inference. Link to the exact source file, API diagnosis, log excerpt, or issue comment where useful; distinguish the inspected source revision from the running version.
    - **Possible solution:** a concrete next change, its scope/owner, and how to verify it. Do not claim it is implemented. Include a stop/rollback condition only when the action warrants one.
 5. End with the next action and unresolved questions. Link related issue/diagnosis documents. Cover only verified cases, and state any important coverage gaps.
 6. Open the HTML for the user and check it visually. Verify images load, navigation anchors work, callouts point to the right elements, links resolve, and steps remain readable at narrow widths. Return a short local file link. A ZIP is optional when portability would help.
 
-## Screenshots and annotations
+## Screenshot evidence
 
-Read [references/annotations.md](references/annotations.md) when capturing images or placing SVG callouts.
+Preserve real screenshots and link to the originals. Do not fabricate UI evidence or capture unrelated personal content. Keep evidence local unless publication is requested.
 
-- Preserve captured originals. Do not turn generated UI into evidence, invent missing controls, or hide text essential to reproduction.
-- Prefer an HTML/SVG annotation layer over the unmodified image for the local guide: use an SVG `viewBox` matching the screenshot's pixel dimensions and scale both together. Place explanations outside the image and connect them with numbered boxes/arrows. The template includes a commented example. This is page composition, not repainting screenshot pixels.
-- If actual raster image editing is requested, follow the available image-editing tool/skill instructions, inspect the output against the original, and label it as an explanatory rendering. Always retain a direct link to the original.
-- Match numbers in the instructions, callouts, and captions. Use color plus labels, never color alone. Avoid covering the clicked control or missing-connection area with commentary.
-- Do not capture unrelated tabs, credentials, or unrelated personal content. Keep local evidence local unless the user asks to publish it. A failed external attachment must not block delivery of the local guide; do not invent hosted links.
+For SVG boxes, arrows and numbered callouts, use `$screenshot-annotations` when installed. Embed its figure and scoped annotation styles into the report, matching callout numbers to the steps and captions. If that skill is unavailable, use the report's plain screenshot and caption; no companion files are required to create a walkthrough. Do not claim annotations were added when they were not.
 
 ## Keep the guide practical
 

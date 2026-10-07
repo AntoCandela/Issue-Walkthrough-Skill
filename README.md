@@ -4,11 +4,12 @@ Turn a software issue into a local HTML guide with real screenshots, numbered ca
 
 Local working repository. Not published yet.
 
-## Available skill
+## Available skills
 
 | Skill | What it does |
 | --- | --- |
-| [issue-walkthrough](skills/issue-walkthrough/SKILL.md) | Explains how to reproduce, understand and verify an issue through a visual walkthrough. |
+| [issue-walkthrough](skills/issue-walkthrough/SKILL.md) | Plans and writes the report: steps, evidence, causes, fixes and verification. |
+| [screenshot-annotations](skills/screenshot-annotations/SKILL.md) | Adds SVG boxes, arrows and numbered callouts to real screenshots, independently or inside a report. |
 
 Works with different repositories and applications. Browser screenshots need a capture-capable agent environment. Backend and CLI walkthroughs can use real request examples and terminal output instead. The skill does not include a browser automation runtime.
 
@@ -20,22 +21,29 @@ skills/
     SKILL.md                  Workflow instructions
     agents/openai.yaml        Optional Codex metadata
     assets/walkthrough.html   Editable HTML and CSS template
-    references/annotations.md Screenshot and SVG guidance
+  screenshot-annotations/
+    SKILL.md                  Screenshot and SVG instructions
+    agents/openai.yaml        Optional Codex metadata
+    assets/annotated-screenshot.html  Editable annotation template
 ```
 
 ## Edit the HTML
 
-Start with [walkthrough.html](skills/issue-walkthrough/assets/walkthrough.html). Its CSS is in the style element, followed by the page structure and a commented SVG annotation example. Keep the template tokens (`{{TITLE}}`, etc.) for the agent to replace in each guide. Opening the template directly shows those tokens; it is not a completed report.
+Start with [walkthrough.html](skills/issue-walkthrough/assets/walkthrough.html). Its CSS is in the style element, followed by the report structure. Edit [annotated-screenshot.html](skills/screenshot-annotations/assets/annotated-screenshot.html) for the SVG callouts and screenshot presentation. Keep the template tokens (`{{TITLE}}`, etc.) for the agent to replace in each guide. Opening the template directly shows those tokens; it is not a completed report.
 
 Edit this repository's template to change the appearance of future walkthroughs. Installed copies of the skill are separate and do not update automatically.
 
 ## Try it locally
 
-Copy the complete `skills/issue-walkthrough` folder into your agent's supported skill directory. For Codex this is usually `~/.codex/skills/issue-walkthrough`. If already installed, review the differences before replacing that copy.
+Copy either or both complete skill folders from `skills/` into your agent's supported skill directory. For Codex this is usually `~/.codex/skills/issue-walkthrough`. If already installed, review the differences before replacing that copy.
+
+Install both to combine reports and SVG annotations. The walkthrough skill works alone using plain screenshots and captions; the annotation skill works alone without creating a full issue report.
 
 Example request:
 
 > Use $issue-walkthrough to reproduce this issue and create a local HTML guide with screenshots, numbered callouts, likely causes and verification steps. Clearly label anything you could not test.
+
+> Use $screenshot-annotations to highlight the confusing controls in this screenshot with numbered SVG callouts.
 
 Generated guides default to `usability-reports/<issue-slug>-visual/` in the target workspace. No build step is required to open a guide.
 

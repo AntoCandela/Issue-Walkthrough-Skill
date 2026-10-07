@@ -1,0 +1,6 @@
+interface:
+  display_name: "Screenshot Annotations"
+  short_description: "SVG boxes, arrows and callouts on real screenshots"
+  default_prompt: "Use $screenshot-annotations to explain this screenshot with SVG callouts and a local HTML preview."
+policy:
+  allow_implicit_invocation: true

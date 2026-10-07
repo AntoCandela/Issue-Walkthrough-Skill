@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<style>
+body{margin:0;padding:24px;font:16px/1.5 system-ui,sans-serif;color:#17253a;background:#edf2f7}
+main{max-width:1180px;margin:auto}
+.annotated-figure{margin:0}
+.annotated-shot{position:relative}
+.annotated-shot img{display:block;width:100%;height:auto}
+.annotated-shot svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.annotated-figure figcaption{margin-top:12px}
+.annotated-figure a{color:#175ac8;overflow-wrap:anywhere}
+</style>
+</head>
+<body><main>
+<h1>{{TITLE}}</h1>
+<figure class="annotated-figure">
+<div class="annotated-shot">
+<img src="{{SCREENSHOT_FILE}}" alt="{{SCREENSHOT_DESCRIPTION}}">
+<!-- Coordinates are saved-image pixels. Give each figure a unique FIGURE_ID. -->
+<svg viewBox="0 0 {{IMAGE_WIDTH}} {{IMAGE_HEIGHT}}" aria-hidden="true">
+<defs><marker id="arrow-{{FIGURE_ID}}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#175ac8"/></marker></defs>
+<rect x="{{BOX_X}}" y="{{BOX_Y}}" width="{{BOX_WIDTH}}" height="{{BOX_HEIGHT}}" fill="none" stroke="#175ac8" stroke-width="3"/>
+<path d="M{{ARROW_START_X}} {{ARROW_START_Y}} L{{ARROW_END_X}} {{ARROW_END_Y}}" fill="none" stroke="#175ac8" stroke-width="3" marker-end="url(#arrow-{{FIGURE_ID}})"/>
+<circle cx="{{MARKER_X}}" cy="{{MARKER_Y}}" r="18" fill="#175ac8"/>
+<text x="{{MARKER_X}}" y="{{MARKER_Y}}" dy=".35em" fill="white" font-size="18" text-anchor="middle">1</text>
+</svg>
+</div>
+<figcaption><strong>1.</strong> {{CALLOUT_EXPLANATION}} <a href="{{SCREENSHOT_FILE}}">Open original screenshot</a></figcaption>
+</figure>
+</main></body></html>
