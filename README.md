@@ -64,7 +64,7 @@ Example request:
 
 > Use $github-issue-export to export this HTML walkthrough as a local Markdown draft with rendered annotated PNGs. Do not publish yet.
 
-The export skill guides the agent through rendering and publishing; it includes a Playwright rendering script; install its Python dependency and Chromium before use. GitHub credentials are not included. GitHub gets a static snapshot, while the local HTML and SVG remain editable.
+The export skill includes a Playwright image-rendering script. Install its Python dependency and Chromium before use. The agent also prepares matching HTML and Markdown drafts in the export folder. GitHub credentials are not included. GitHub gets a static snapshot, while the local HTML and SVG remain editable.
 
 Generated guides default to `usability-reports/<issue-slug>-visual/` in the target workspace. No build step is required to open a guide.
 
